@@ -1,0 +1,18 @@
+const verses=[
+["The wheels on the bus go round and round","Round and round","Round and round"],["The wheels on the bus go round and round","All through the town"],
+["The wipers on the bus go swish swish swish","Swish swish swish","Swish swish swish"],["The wipers on the bus go swish swish swish","All through the town"],
+["The horn on the bus goes beep beep beep","Beep beep beep","Beep beep beep"],["The horn on the bus goes beep beep beep","All through the town"],
+["The doors on the bus go open and shut","Open and shut","Open and shut"],["The doors on the bus go open and shut","All through the town"],
+["The babies on the bus go wa wa wa","Wa wa wa","Wa wa wa"],["The babies on the bus go wa wa wa","All through the town"],
+["The people on the bus go bounce bounce bounce","Bounce bounce bounce","Bounce bounce bounce"],["The people on the bus go bounce bounce bounce","All through the town"],
+["The driver on the bus says move on back","Move on back","Move on back"],["The driver on the bus says move on back","All through the town"],
+["The moms and dads on the bus say shh shh shh","Shh shh shh","Shh shh shh"],["The moms and dads on the bus say shh shh shh","All through the town"]];
+const film=document.getElementById('film'),lyrics=document.getElementById('lyrics'),verse=document.getElementById('verse'),play=document.getElementById('play'),bar=document.getElementById('progress'),cat=document.getElementById('cat');
+let audio,active=false,timer,start;
+function draw(lines){lyrics.replaceChildren();lines.forEach(line=>{const row=document.createElement('div');row.className='lyric-line';line.split(/\s+/).forEach(text=>{const word=document.createElement('span');word.className='word';word.textContent=text;row.appendChild(word)});lyrics.appendChild(row)})}
+function tone(type,i){const C=window.AudioContext||window.webkitAudioContext;if(!C)return;audio ||=new C();if(audio.state==='suspended')audio.resume();const t=audio.currentTime,o=audio.createOscillator(),g=audio.createGain();o.connect(g).connect(audio.destination);o.type=type==='beep'?'sine':'triangle';o.frequency.setValueAtTime(type==='beep'?392:[262,294,330,349,392,440][i%6],t);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.035,t+.025);g.gain.exponentialRampToValueAtTime(.0001,t+.22);o.start(t);o.stop(t+.23)}
+function mood(i){cat.classList.remove('yawning','sleeping');if(i===7||i===14)cat.classList.add('yawning');if(i===8||i===15)cat.classList.add('sleeping')}
+function show(i){if(i>=verses.length){finish();return}verse.textContent=`Verse ${i+1} · sing together`;mood(i);draw(verses[i]);const words=[...lyrics.querySelectorAll('.word')],duration=180000/verses.length,step=duration/words.length;let n=0;const next=()=>{if(!active)return;if(n>=words.length){show(i+1);return}words.forEach((w,j)=>{w.classList.toggle('active',j===n);w.classList.toggle('done',j<n)});if(n%4===0)tone(i===4||i===5?'beep':'beat',n+i);n++;timer=setTimeout(next,step)};next()}
+function finish(){active=false;clearTimeout(timer);film.classList.remove('playing');cat.classList.remove('yawning','sleeping');verse.textContent='Until next time';draw(['The end — beautiful singing!']);lyrics.querySelector('.word').classList.add('active');bar.style.width='100%';play.innerHTML='<span>↻</span> Sing again';play.classList.remove('hidden')}
+play.addEventListener('click',()=>{if(active)return;active=true;start=performance.now();bar.style.width='0';play.classList.add('hidden');film.classList.add('playing');show(0);const tick=()=>{if(!active)return;bar.style.width=`${Math.min(100,(performance.now()-start)/180000*100)}%`;requestAnimationFrame(tick)};requestAnimationFrame(tick)});
+draw(['The wheels on the bus','go round and round']);
