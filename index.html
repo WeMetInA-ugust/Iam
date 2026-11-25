@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Wheels on the Bus — Cute Cat Sing-Along</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="stage" id="stage" aria-label="Three minute kids sing-along animation">
+    <div class="paper-grain"></div>
+    <div class="pink-ink ink-a"></div><div class="pink-ink ink-b"></div>
+    <div class="pink-ink ink-c"></div><div class="pink-ink ink-d"></div>
+
+    <div class="sky">
+      <div class="cloud cloud-a"></div><div class="cloud cloud-b"></div>
+      <div class="hill hill-back"></div><div class="hill hill-front"></div>
+      <div class="road"></div>
+    </div>
+
+    <section class="bus-wrap" aria-hidden="true">
+      <div class="bus">
+        <div class="bus-light"></div>
+        <div class="bus-window window-a"><span></span></div>
+        <div class="bus-window window-b"><span></span></div>
+        <div class="bus-window window-c"><span></span></div>
+        <div class="bus-door"></div>
+        <div class="wheel wheel-a"><i></i></div>
+        <div class="wheel wheel-b"><i></i></div>
+      </div>
+    </section>
+
+    <section class="cat" aria-label="Black cat instructor">
+      <div class="tail"><div class="tail-tip"></div></div>
+      <div class="body"></div>
+      <div class="head">
+        <div class="ear ear-left"></div><div class="ear ear-right"></div>
+        <div class="face">
+          <div class="eye eye-left"><i></i></div><div class="eye eye-right"><i></i></div>
+          <div class="nose"></div><div class="mouth"></div>
+          <div class="whisker wl-a"></div><div class="whisker wl-b"></div>
+          <div class="whisker wr-a"></div><div class="whisker wr-b"></div>
+        </div>
+      </div>
+      <div class="mic-arm"></div><div class="mic"><i></i></div>
+    </section>
+
+    <div class="lyrics-panel">
+      <div class="verse-label" id="verseLabel">Verse 1</div>
+      <div class="lyrics" id="lyrics" aria-live="polite"></div>
+    </div>
+
+    <button class="sound-button" id="soundButton" type="button" aria-label="Play animation">
+      <span class="play">▶</span><span class="button-label">Play sing-along</span>
+    </button>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
